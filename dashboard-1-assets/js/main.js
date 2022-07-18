@@ -46,6 +46,11 @@ const defaultOptions = {
         type: 'none',
       },
     },
+    active: {
+      filter: {
+        type: 'none',
+      },
+    },
   },
 };
 
@@ -54,7 +59,7 @@ const sparklineBarOptions = {
   series: [
     {
       label: 'Series 1',
-      data: [12, 24, 15, 47, 15, 58, 47, 78],
+      data: [12, 24, 15, 47, 15],
     },
   ],
   ...defaultOptions,
@@ -71,7 +76,7 @@ const sparklineBarOptions = {
   colors: [colorPrimary],
   plotOptions: {
     bar: {
-      columnWidth: '80%',
+      columnWidth: '60%',
     },
   },
 
@@ -187,6 +192,65 @@ const barChartOptions = {
 renderChart(barChartOptions, 'bar-chart');
 
 // Create gauge Chart
+const gaugeChartOptions = {
+  series: [
+    {
+      name: 'Using',
+      data: [24],
+    },
+    { name: 'Unused', data: [12] },
+  ],
+  ...defaultOptions,
+
+  chart: {
+    ...defaultOptions.chart,
+    type: 'bar',
+    stacked: true,
+  },
+
+  colors: [colorPrimary, '#363636'],
+  plotOptions: {
+    bar: {
+      columnWidth: '50%',
+      //   borderRadius: 6, for rounded bars
+    },
+  },
+
+  dataLabels: {
+    enabled: false,
+  },
+
+  grid: {
+    strokeDashArray: 3,
+    borderColor: 'rgba(255, 255, 255, 0.05)',
+    padding: { left: 20, right: 20 },
+  },
+
+  labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  yaxis: {
+    show: false,
+  },
+  xaxis: {
+    categories: ['15% Down'],
+    labels: {
+      style: {
+        fontFamily: 'Sora',
+        colors: colorLabel,
+      },
+    },
+    axisBorder: {
+      show: false,
+    },
+    axisTicks: {
+      show: false,
+    },
+
+    crosshairs: {
+      show: false,
+    },
+  },
+};
+renderChart(gaugeChartOptions, 'gauge-chart');
 
 // Create area chart
 
