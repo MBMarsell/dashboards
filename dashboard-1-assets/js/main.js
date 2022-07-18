@@ -253,5 +253,73 @@ const gaugeChartOptions = {
 renderChart(gaugeChartOptions, 'gauge-chart');
 
 // Create area chart
+const areaChartOptions = {
+  ...defaultOptions,
+  series: [
+    {
+      name: 'Series 1',
+      data: [0, 10, 40, 90, 30, 10, 0],
+    },
+    {
+      name: 'Series 2',
+      data: [0, 5, 30, 80, 20, 5, 0],
+    },
+  ],
+  chart: {
+    ...defaultOptions.chart,
+    type: 'area',
+    height: 240,
+  },
+  markers: {
+    size: 0,
+  },
+
+  colors: [colorDefault, colorPrimary],
+  fill: {
+    type: 'solid',
+    opacity: 1,
+  },
+  grid: {
+    strokeDashArray: 3,
+    borderColor: 'rgba(255,255,255,0.05)',
+    padding: { left: 20, right: 20, top: 0, bottom: -8 },
+  },
+  stroke: {
+    show: false,
+  },
+  yaxis: {
+    max: 100,
+    tickAmount: 5,
+    labels: {
+      style: {
+        fontFamily: 'Sora',
+        colors: colorLabel,
+      },
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  xaxis: {
+    labels: {
+      show: false,
+    },
+    axisBorder: {
+      show: false,
+    },
+    axisTicks: {
+      show: false,
+    },
+    crosshairs: {
+      stroke: {
+        color: '#rgba(255,255,255, 0.05)',
+        width: 1,
+        dashArray: 2,
+      },
+    },
+  },
+};
+
+renderChart(areaChartOptions, 'area-chart');
 
 // Create line Chart
