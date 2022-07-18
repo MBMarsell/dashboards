@@ -15,13 +15,23 @@ const defaultOptions = {
   chart: {
     height: 136,
     width: '100%',
+    toolbar: {
+      show: false,
+    },
   },
+
   tooltip: {
     enabled: true,
     fillSeriesColor: false,
     style: {
       fontFamily: 'Sora',
     },
+  },
+  legend: {
+    show: false,
+  },
+  selection: {
+    enabled: false,
   },
   //   States for hover
   states: {
@@ -126,40 +136,59 @@ radialBarChart.render();
 const barChartOptions = {
   series: [
     {
-      label: 'Series 1',
-      data: [12, 24, 15, 47, 15, 58, 47, 78],
+      name: 'Data 1',
+      data: [24, 44, 30, 90, 30, 89, 68],
     },
+    { name: 'Data 2', data: [12, 24, 15, 47, 15, 58, 47] },
   ],
   ...defaultOptions,
 
   chart: {
+    ...defaultOptions.chart,
     type: 'bar',
-    width: 80,
-    height: 35,
-    sparkline: {
-      enabled: true,
+  },
+
+  colors: [colorPrimary, '#363636'],
+  plotOptions: {
+    bar: {
+      columnWidth: '50%',
+      //   borderRadius: 6, for rounded bars
     },
   },
 
-  colors: [colorPrimary],
-  plotOptions: {
-    bar: {
-      columnWidth: '80%',
-    },
+  dataLabels: {
+    enabled: false,
+  },
+
+  grid: {
+    strokeDashArray: 3,
+    borderColor: 'rgba(255, 255, 255, 0.05)',
+    padding: { left: 20, right: 20 },
   },
 
   labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  yaxis: {
+    show: false,
+  },
   xaxis: {
-    crosshairs: {
-      width: 0,
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    labels: {
+      floating: true,
+      style: {
+        fontFamily: 'Sora',
+        colors: colorLabel,
+      },
     },
-  },
+    axisBorder: {
+      show: false,
+    },
+    axisTicks: {
+      show: false,
+    },
 
-  tooltip: {
-    enabled: false,
-  },
-  selection: {
-    enabled: true,
+    crosshairs: {
+      show: false,
+    },
   },
 };
 
