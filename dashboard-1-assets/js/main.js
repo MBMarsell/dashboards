@@ -10,6 +10,12 @@ const colorDefault = getColorVariable('default');
 const colorCard = getColorVariable('card');
 const colorLabel = getColorVariable('label');
 
+// Render chart function
+const renderChart = (options, id) => {
+  const chart = new ApexCharts(document.querySelector(`#${id}`), options);
+  chart.render();
+};
+
 // Declare Default Chart Options
 const defaultOptions = {
   chart: {
@@ -83,14 +89,8 @@ const sparklineBarOptions = {
     enabled: true,
   },
 };
-
-const sparklineBarChart = new ApexCharts(
-  document.querySelector('#sparklines-bar'),
-  sparklineBarOptions
-);
-
-// Render the sparkline chart
-sparklineBarChart.render();
+// Render sparkline bar
+renderChart(sparklineBarOptions, 'sparklines-bar');
 
 // Create radial bar chart
 const radialBarOptions = {
@@ -123,14 +123,7 @@ const radialBarOptions = {
     },
   },
 };
-
-const radialBarChart = new ApexCharts(
-  document.querySelector('#radial-bar-chart'),
-  radialBarOptions
-);
-
-// Render the radial chart
-radialBarChart.render();
+renderChart(radialBarOptions, 'radial-bar-chart');
 
 // Create bar Chart
 const barChartOptions = {
@@ -191,13 +184,7 @@ const barChartOptions = {
     },
   },
 };
-
-const barChart = new ApexCharts(
-  document.querySelector('#bar-chart'),
-  barChartOptions
-);
-
-barChart.render();
+renderChart(barChartOptions, 'bar-chart');
 
 // Create gauge Chart
 
