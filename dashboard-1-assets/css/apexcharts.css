@@ -9,6 +9,10 @@ body .apexcharts-tooltip.apexcharts-theme-light {
   /* opacity: 1 !important; */
 }
 
+body .apexcharts-xcrosshairs {
+  opacity: 1 !important;
+}
+
 body .apexcharts-tooltip.apexcharts-theme-light .apexcharts-tooltip-title {
   display: none;
 }

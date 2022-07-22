@@ -234,7 +234,7 @@ const gaugeChartOptions = {
     show: false,
   },
   xaxis: {
-    categories: ['15% Down'],
+    categories: ['', '', ''],
     labels: {
       style: {
         fontFamily: 'Sora',
@@ -261,11 +261,11 @@ const areaChartOptions = {
   series: [
     {
       name: 'Series 1',
-      data: [0, 0, 0, 60, 20, 60, 0, 0],
+      data: [10, 25, 40, 60, 80, 60, 50, 30],
     },
     {
       name: 'Series 2',
-      data: [0, 5, 35, 20, 60, 25, 40, 0],
+      data: [5, 20, 35, 20, 60, 25, 40, 17],
     },
   ],
   chart: {
@@ -293,6 +293,21 @@ const areaChartOptions = {
   stroke: {
     show: true,
   },
+  markers: {
+    size: 0,
+    colors: undefined,
+    strokeColors: colorCard,
+    strokeWidth: 1,
+    strokeOpacity: 0.5,
+    strokeDashArray: 0,
+    fillOpacity: 1,
+    discrete: [],
+    shape: 'circle',
+    hover: {
+      size: undefined,
+      sizeOffset: 6,
+    },
+  },
   yaxis: {
     max: 100,
     tickAmount: 5,
@@ -317,14 +332,18 @@ const areaChartOptions = {
       show: false,
     },
     crosshairs: {
-      show: false,
+      show: true,
       stroke: {
-        color: '#rgba(255,255,255, 0.05)',
+        color: '#rgba(255,255,255, 0.25)',
         width: 1,
         dashArray: 2,
       },
       dropShadow: {
         enabled: false,
+      },
+      fill: {
+        type: 'solid',
+        color: '#b1b9c4',
       },
       position: 'front',
     },
