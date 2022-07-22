@@ -24,6 +24,9 @@ const defaultOptions = {
     toolbar: {
       show: false,
     },
+    zoom: {
+      enabled: false,
+    },
   },
 
   tooltip: {
@@ -258,11 +261,11 @@ const areaChartOptions = {
   series: [
     {
       name: 'Series 1',
-      data: [0, 10, 40, 90, 30, 10, 0],
+      data: [0, 0, 0, 60, 20, 60, 0, 0],
     },
     {
       name: 'Series 2',
-      data: [0, 5, 30, 80, 20, 5, 0],
+      data: [0, 5, 35, 20, 60, 25, 40, 0],
     },
   ],
   chart: {
@@ -270,22 +273,25 @@ const areaChartOptions = {
     type: 'area',
     height: 240,
   },
-  markers: {
-    size: 0,
-  },
 
   colors: [colorDefault, colorPrimary],
   fill: {
-    type: 'solid',
-    opacity: 1,
+    type: 'gradient',
+    gradient: {
+      shadeIntensity: 0.05,
+      opacityFrom: 0.1,
+      opacityTo: 1,
+      stops: [0, 90, 100],
+    },
   },
+
   grid: {
     strokeDashArray: 3,
     borderColor: 'rgba(255,255,255,0.05)',
     padding: { left: 20, right: 20, top: 0, bottom: -8 },
   },
   stroke: {
-    show: false,
+    show: true,
   },
   yaxis: {
     max: 100,
@@ -311,11 +317,16 @@ const areaChartOptions = {
       show: false,
     },
     crosshairs: {
+      show: false,
       stroke: {
         color: '#rgba(255,255,255, 0.05)',
         width: 1,
         dashArray: 2,
       },
+      dropShadow: {
+        enabled: false,
+      },
+      position: 'front',
     },
   },
 };
