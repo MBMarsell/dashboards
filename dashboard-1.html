@@ -79,7 +79,7 @@
         </div>
         <div>
           <h4 class="card-h4">VIP's</h4>
-          <h2 class="card-h2 has-bottom-margin">450</h2>
+          <h2 class="card-h2 has-bottom-margin">420</h2>
         </div>
         <div>
           <h4 class="card-h4">Left</h4>
@@ -177,7 +177,11 @@
     <div class="card card-line-chart">
       <header class="card-header">
         <h3 class="card-h3 no-bottom-margin">Line Chart</h3>
-        <span class="card-header-icon uil uil-ellipsis-v"></span>
+        <div>
+          <button type="button" onclick="selectLineYear(this, 2021)">2021</button>
+          <button type="button" onclick="selectLineYear(this, 2022)" class="active">2022</button>
+        </div>
+        <!-- <span class="card-header-icon uil uil-ellipsis-v"></span> -->
       </header>
       <div id="line-chart" class="floating"></div>
     </div>
