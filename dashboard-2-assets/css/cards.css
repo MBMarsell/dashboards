@@ -31,6 +31,10 @@
   margin-bottom: var(--length-lg1);
 }
 
+.card-leaflet-map {
+  grid-area: leaflet-map;
+}
+
 .card-map-1 {
   grid-area: map-1;
 }

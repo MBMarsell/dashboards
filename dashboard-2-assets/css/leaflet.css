@@ -1,4 +1,4 @@
-#map1,
+#leaflet-map,
 #map2 {
   height: 420px;
 }
@@ -32,7 +32,7 @@
   border-radius: 50%;
 }
 
-#map1 .leaflet-marker-div {
+#leaflet-map .leaflet-marker-div {
   background: var(--color-primary);
 }
 
@@ -56,7 +56,7 @@
 }
 
 .leaflet-marker-div::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -68,7 +68,7 @@
   animation: pulse 3s 3s infinite linear;
 }
 
-#map1 .leaflet-marker-div::before {
+#leaflet-map .leaflet-marker-div::before {
   border-color: var(--color-primary);
 }
 
