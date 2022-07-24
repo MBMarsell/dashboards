@@ -1,6 +1,6 @@
 const map = L.map('leaflet-map', {
   zoomControl: false,
-}).setView([64.990556, 17.307778], 3.5);
+}).setView([64.990556, 17.307778], 4);
 
 map.touchZoom.disable();
 map.touchZoom.disable();
