@@ -14,6 +14,12 @@ const colorBorder = getColorVariable('border');
 const colorLabel = getColorVariable('label');
 const colorGrey = getColorVariable('grey');
 
+// Create chart function
+const createChart = (selector, options) => {
+  const ctx = document.getElementById(selector).getContext('2d');
+  return new Chart(ctx, options);
+};
+
 // Abbreviate long number function
 const abbreviateLongNumber = n => {
   if (n < 1e3) return n;
@@ -45,8 +51,7 @@ const getWorldProducts = async () => {
 };
 getWorldProducts();
 
-// Get total uk products
-const getUKProducts = async () => {
+const getNoProducts = async () => {
   try {
     const res = await fetch(
       `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
@@ -65,41 +70,12 @@ const getUKProducts = async () => {
     console.log('Error', error);
   }
 };
-getUKProducts();
+getNoProducts();
 
-// Get drinks
-
-// Bar Figure Chart
-const barFigureChartCtx = document
-  .getElementById('figureBarChart')
-  .getContext('2d');
-const barFigureChart = new Chart(barFigureChartCtx, {
+// Chart default options
+const defaultOptions = {
   type: 'bar',
-  data: {
-    labels: ['Gatorade', 'Pepsi', 'Red Bull', 'Monster', 'Coca Cola', 'Sprite'],
-    datasets: [
-      {
-        label: '2021',
-        data: [50, 140, 95, 80, 200, 95],
-        backgroundColor: [colorAccent],
-        hoverBackgroundColor: [colorAccent],
-        borderColor: [colorAccent],
-        borderWidth: 1,
-        barThickness: 12,
-        borderRadius: 6,
-      },
-      {
-        label: '2022',
-        data: [85, 160, 140, 98, 270, 75],
-        backgroundColor: ['#fff'],
-        hoverBackgroundColor: ['#fff'],
-        borderColor: ['#fff'],
-        borderWidth: 1,
-        barThickness: 12,
-        borderRadius: 6,
-      },
-    ],
-  },
+  data: {},
   options: {
     plugins: {
       legend: {
@@ -136,7 +112,66 @@ const barFigureChart = new Chart(barFigureChartCtx, {
       },
     },
   },
-});
+};
+
+// Bar Figure Chart
+
+const barRes = axios
+  .get(
+    `https:/no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
+  )
+  .then(function (response) {
+    const { data } = response;
+    const { products } = data;
+
+    const labels = products.map(product => product.brands);
+
+    const barData1 = [],
+      barData2 = [];
+
+    products.forEach(product => {
+      const languages = product.languages_tags.length,
+        ingredients = product.ingredients.length;
+
+      barData1.push(languages);
+      barData2.push(ingredients);
+    });
+
+    const barOptions = {
+      ...defaultOptions,
+      data: {
+        ...defaultOptions.data,
+        labels,
+        datasets: [
+          {
+            label: 'Languages',
+            data: barData1,
+            backgroundColor: ['#df8420'],
+            hoverBackgroundColor: ['#df8420'],
+            borderColor: ['#df8420'],
+            borderWidth: 1,
+            barThickness: 12,
+            borderRadius: 6,
+          },
+          {
+            label: 'Ingredients',
+            data: barData2,
+            backgroundColor: ['#fff'],
+            hoverBackgroundColor: ['#fff'],
+            borderColor: ['#fff'],
+            borderWidth: 1,
+            barThickness: 12,
+            borderRadius: 6,
+          },
+        ],
+      },
+    };
+
+    const barFigureChart = createChart('figureBarChart', barOptions);
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
 
 // Area Table Chart
 
