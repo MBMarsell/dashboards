@@ -25,7 +25,6 @@ const abbreviateLongNumber = n => {
 
 // Get Data From API
 const category = 'en:beverages'; // Change category
-
 const getWorldProducts = async () => {
   try {
     const res = await fetch(
@@ -46,6 +45,7 @@ const getWorldProducts = async () => {
 };
 getWorldProducts();
 
+// Get total uk products
 const getUKProducts = async () => {
   try {
     const res = await fetch(
@@ -67,11 +67,76 @@ const getUKProducts = async () => {
 };
 getUKProducts();
 
-// Get total uk products
-
 // Get drinks
 
 // Bar Figure Chart
+const barFigureChartCtx = document
+  .getElementById('figureBarChart')
+  .getContext('2d');
+const barFigureChart = new Chart(barFigureChartCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Gatorade', 'Pepsi', 'Red Bull', 'Monster', 'Coca Cola', 'Sprite'],
+    datasets: [
+      {
+        label: '2021',
+        data: [50, 140, 95, 80, 200, 95],
+        backgroundColor: [colorAccent],
+        hoverBackgroundColor: [colorAccent],
+        borderColor: [colorAccent],
+        borderWidth: 1,
+        barThickness: 12,
+        borderRadius: 6,
+      },
+      {
+        label: '2022',
+        data: [85, 160, 140, 98, 270, 75],
+        backgroundColor: ['#fff'],
+        hoverBackgroundColor: ['#fff'],
+        borderColor: ['#fff'],
+        borderWidth: 1,
+        barThickness: 12,
+        borderRadius: 6,
+      },
+    ],
+  },
+  options: {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        usePointStyle: true,
+        caretSize: 0,
+        padding: 12,
+        bodyFont: {
+          family: 'Sora',
+          size: 12,
+          weight: 400,
+        },
+        footerFont: {
+          family: 'Sora',
+          size: 12,
+          weight: 400,
+        },
+        titleFont: {
+          family: 'Sora',
+          size: 12,
+          weight: 400,
+        },
+      },
+    },
+
+    scales: {
+      y: {
+        display: false,
+      },
+      x: {
+        display: false,
+      },
+    },
+  },
+});
 
 // Area Table Chart
 
