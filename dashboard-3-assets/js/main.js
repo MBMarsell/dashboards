@@ -17,7 +17,8 @@ const colorGrey = getColorVariable('grey');
 // Create chart function
 const createChart = (selector, options) => {
   const ctx = document.getElementById(selector).getContext('2d');
-  return new Chart(ctx, options);
+  const chart = new Chart(ctx, options);
+  return [ctx, chart];
 };
 
 // Abbreviate long number function
@@ -174,6 +175,78 @@ const barRes = axios
   });
 
 // Area Table Chart
+const data2022 = [
+  700000, 140000, 300000, 2500000, 500000, 1200000, 400000, 1100000, 600000,
+];
+const data2021 = [
+  500000, 120000, 400000, 900000, 600000, 2300000, 360000, 1800000, 500000,
+];
+
+const areaTableOptions = {
+  type: 'line',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+    datasets: [
+      {
+        backgroundColor: colorPrimary,
+        borderColor: colorPrimary,
+        hoverBackgroundColor: colorPrimary,
+        label: '',
+        fill: true,
+        data: data2022,
+      },
+    ],
+  },
+  options: {
+    ...defaultOptions.options,
+    elements: {
+      point: {
+        radius: 8,
+        hoverRadius: 8,
+        borderWidth: 0,
+      },
+    },
+    plugins: defaultOptions.options.plugins,
+    tension: 0.3,
+    scales: {
+      x: {
+        display: false,
+      },
+      y: {
+        suggestedMax: 3500000,
+        suggestedMin: 0,
+        ticks: {
+          font: {
+            family: 'Sora',
+            size: 10,
+          },
+          callback: value => abbreviateLongNumber(value),
+        },
+        grid: {
+          drawBorder: true,
+          drawOnChartArea: true,
+          drawTicks: true,
+          color: colorBorder,
+          borderColor: 'transparent',
+          borderDash: [5, 5],
+          borderDashOffset: 2,
+          tickColor: 'transparent',
+        },
+      },
+    },
+  },
+};
+const [areaChartCtx, areaChart] = createChart(
+  'areaTableChart',
+  areaTableOptions
+);
+
+const gradient = areaChartCtx.createLinearGradient(0, 0, 0, 220);
+gradient.addColorStop(0, 'rgba(0,0,0, 0.2)');
+gradient.addColorStop(0.8, 'rgba(0,0,0,0)');
+
+areaChart.data.datasets[0].backgroundColor = gradient;
+areaChart.update();
 
 // Get paged table
 
