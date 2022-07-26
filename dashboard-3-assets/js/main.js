@@ -380,6 +380,100 @@ const selectYear = (element, year) => {
 // Radial Bar Card
 
 // Get paged table
+let page = 1,
+  pageCount = 0,
+  pageSize = 3;
+
+const goToFirstPage = (element, newPage) => {
+  element.disabled = true;
+  getPagedTable(newPage);
+};
+
+const buildPagination = newPage => {
+  const pagesToDisplay = 3;
+  let start = 0;
+  let end = pagesToDisplay;
+
+  if (newPage - 1 > (pagesToDisplay - 1) / 2) {
+    start = newPage - 1 - (pagesToDisplay - 1) / 2;
+    end = start + pagesToDisplay;
+  }
+
+  if (newPage - 1 > pageCount - (pagesToDisplay + 1) / 2) {
+    start = pageCount - pagesToDisplay;
+    end = pageCount;
+  }
+
+  let html = '';
+
+  html += `
+    <button 
+    ${newPage === 1 ? 'disabled' : ''} onclick="goToFirstPage(this, 1)" 
+    class="uil uil-previous">
+    </button>
+  `;
+
+  for (let i = start; i < end; i++) {
+    html += `
+      <button type="button" class="${
+        i + 1 === newPage ? 'active' : ''
+      }" onclick="getPagedTable(${i + 1})">${i + 1}</button>
+    `;
+  }
+
+  document.querySelector('#pagination').innerHTML = html;
+};
+
+const getPagedTable = async (newPage = page) => {
+  document.querySelector('#pagedTable').classList.add('loading');
+  document.querySelector('.paged-table-spinner').classList.add('loading');
+
+  const res = await axios.get(
+    `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=${pageSize}&page=${newPage}`
+  );
+
+  const { data } = res;
+  const { products } = data;
+
+  let html = '';
+
+  products.forEach(product => {
+    html += `
+      <tr>
+        <td width="3rem">
+          <img src="${
+            product.image_front_small_url ||
+            '../../shared-assets/images/placeholder.jpeg'
+          }" />
+        </td>
+        <td width="200px">
+          <span class="title">
+            ${product.product_name || 'Unknown'}
+          </span>
+          <span class="brand">
+            ${product.brands || ''}
+          </span>
+        </td>
+        <td>
+          ${(product.nutriscore_data && product.nutriscore_data.energy) || ''}
+        </td>
+      </tr>
+    `;
+  });
+
+  pageCount = Math.ceil(data.count / pageSize);
+
+  document.querySelector(
+    '.paged-table-count'
+  ).innerHTML = `Page ${newPage} of ${pageCount}`;
+
+  buildPagination(newPage);
+
+  document.querySelector('#pagedTable').innerHTML = html;
+  document.querySelector('#pagedTable').classList.remove('loading');
+  document.querySelector('.paged-table-spinner').classList.remove('loading');
+};
+getPagedTable();
 
 // Dark Mode Toggle
 const toggleDarkMode = element => {
