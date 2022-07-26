@@ -36,6 +36,53 @@ let colorPrimary = getColorVariable('primary'),
   colorChartShade0 = getColorVariable('chart-shade-0'),
   colorChartShade1 = getColorVariable('chart-shade-1');
 
+// Chart default options
+const defaultOptions = {
+  type: 'bar',
+  data: {},
+  options: {
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        usePointStyle: true,
+        callback: {
+          labelPointStyle: () => ({
+            pointStyle: 'circle',
+          }),
+        },
+        caretSize: 0,
+        padding: 12,
+        bodyFont: {
+          family: 'Sora',
+          size: 12,
+          weight: 400,
+        },
+        footerFont: {
+          family: 'Sora',
+          size: 12,
+          weight: 400,
+        },
+        titleFont: {
+          family: 'Sora',
+          size: 12,
+          weight: 400,
+        },
+      },
+    },
+
+    scales: {
+      y: {
+        display: false,
+      },
+      x: {
+        display: false,
+      },
+    },
+  },
+};
+
 // Create chart function
 const createChart = (selector, options) => {
   const ctx = document.getElementById(selector).getContext('2d');
@@ -101,8 +148,47 @@ const buildBarChart = () => {
 };
 
 // Get Radial items select
+const radialBarOptions = {
+  ...defaultOptions,
+  type: 'doughnut',
+  data: {
+    labels: ['Add', ''],
+    datasets: [
+      {
+        label: '',
+        data: [34, 66],
+        backgroundColor: [colorPrimary, colorGrey],
+        hoverBackgroundColor: [colorPrimary, colorGrey],
+        borderColor: 'transparent',
+        borderWidth: 0,
+        borderRadius: 6,
+      },
+    ],
+  },
+  options: {
+    ...defaultOptions.options,
+    cutout: 40,
+    plugins: {
+      ...defaultOptions.options.plugins,
+      tooltip: {
+        ...defaultOptions.options.plugins.tooltip,
+        filter: ({ dataIndex }) => dataIndex === 0,
+        multiKeyBackground: 'transparent',
+      },
+    },
+  },
+};
+
+const [radialBarCtx, radialBarChart] = createChart(
+  'radialBarChart',
+  radialBarOptions
+);
+
 const selectProduct = id => {
   const product = topProducts.find(p => p.id === id);
+
+  radialBarChart.data.datasets[0].data = [product.additives_n, 5];
+  radialBarChart.update();
 
   const facts = [
     `${product?.additives_n || 0} additive(s)`,
@@ -194,56 +280,10 @@ const getTopProducts = async () => {
   topProducts = products;
 
   buildBarChart();
+
   createRadialBarSelect();
 };
 getTopProducts();
-
-// Chart default options
-const defaultOptions = {
-  type: 'bar',
-  data: {},
-  options: {
-    plugins: {
-      legend: {
-        display: false,
-      },
-      tooltip: {
-        usePointStyle: true,
-        callback: {
-          labelPointStyle: () => ({
-            pointStyle: 'circle',
-          }),
-        },
-        caretSize: 0,
-        padding: 12,
-        bodyFont: {
-          family: 'Sora',
-          size: 12,
-          weight: 400,
-        },
-        footerFont: {
-          family: 'Sora',
-          size: 12,
-          weight: 400,
-        },
-        titleFont: {
-          family: 'Sora',
-          size: 12,
-          weight: 400,
-        },
-      },
-    },
-
-    scales: {
-      y: {
-        display: false,
-      },
-      x: {
-        display: false,
-      },
-    },
-  },
-};
 
 // Area Table Chart
 const data2022 = [
@@ -276,7 +316,13 @@ const areaTableOptions = {
         borderWidth: 0,
       },
     },
-    plugins: defaultOptions.options.plugins,
+    plugins: {
+      ...defaultOptions.options.plugins,
+      tooltip: {
+        ...defaultOptions.options.plugins.tooltip,
+        multiKeyBackground: colorPrimary,
+      },
+    },
     tension: 0.3,
     scales: {
       x: {
