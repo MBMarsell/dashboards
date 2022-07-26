@@ -1,3 +1,6 @@
+// Data Variables
+let topProducts = [];
+
 // Load Dark Mode Settings
 let isDarkMode = localStorage.getItem('js_dashboard_dark_mode')
   ? localStorage.getItem('js_dashboard_dark_mode') === 'true'
@@ -49,6 +52,94 @@ const abbreviateLongNumber = n => {
   if (n >= 1e12) return +(n / 1e12).toFixed(1) + 'T';
 };
 
+// Bar Figure Chart
+const buildBarChart = () => {
+  const labels = topProducts.map(product => product.brands);
+
+  const barData1 = [],
+    barData2 = [];
+
+  topProducts.forEach(product => {
+    const languages = product.languages_tags.length,
+      ingredients = product.ingredients.length;
+
+    barData1.push(languages);
+    barData2.push(ingredients);
+  });
+
+  const barOptions = {
+    ...defaultOptions,
+    data: {
+      ...defaultOptions.data,
+      labels,
+      datasets: [
+        {
+          label: 'Languages',
+          data: barData1,
+          backgroundColor: ['#df8420'],
+          hoverBackgroundColor: ['#df8420'],
+          borderColor: ['#df8420'],
+          borderWidth: 1,
+          barThickness: 12,
+          borderRadius: 6,
+        },
+        {
+          label: 'Ingredients',
+          data: barData2,
+          backgroundColor: ['#fff'],
+          hoverBackgroundColor: ['#fff'],
+          borderColor: ['#fff'],
+          borderWidth: 1,
+          barThickness: 12,
+          borderRadius: 6,
+        },
+      ],
+    },
+  };
+
+  createChart('figureBarChart', barOptions);
+};
+
+// Get Radial items select
+const selectProduct = id => {
+  const product = topProducts.find(p => p.id === id);
+
+  const facts = [
+    `${product?.additives_n || 0} additive(s)`,
+    `${product?.categories_tags.length} tag(s)`,
+    `${product?.ingredients_n} ingredient(s)`,
+    `${(product?.completeness * 100).toFixed(1)}%`,
+  ];
+
+  let html = '';
+
+  facts.forEach(fact => {
+    html += `
+      <span class="card-radial-bar-chart-feature-icon uil uil-angle-right"></span>
+      <span class="card-radial-bar-chart-feature-text">${fact}</span>
+    `;
+  });
+
+  document.querySelector('#factsGrid').innerHTML = html;
+};
+
+const createRadialBarSelect = () => {
+  const selectedProduct = topProducts[0];
+  selectProduct(selectedProduct.id);
+
+  let html = '';
+
+  topProducts.forEach(product => {
+    html += `
+      <option value="${product.id}">
+      ${product.product_name || 'Unknown'}
+      </option>
+    `;
+  });
+
+  document.querySelector('#productSelect').innerHTML = html;
+};
+
 // Get Data From API
 const category = 'en:beverages'; // Change category
 const getWorldProducts = async () => {
@@ -91,6 +182,21 @@ const getNoProducts = async () => {
   }
 };
 getNoProducts();
+
+const getTopProducts = async () => {
+  const res = await axios.get(
+    `https:/no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
+  );
+
+  const { data } = res;
+  const { products } = data;
+
+  topProducts = products;
+
+  buildBarChart();
+  createRadialBarSelect();
+};
+getTopProducts();
 
 // Chart default options
 const defaultOptions = {
@@ -138,65 +244,6 @@ const defaultOptions = {
     },
   },
 };
-
-// Bar Figure Chart
-
-const barRes = axios
-  .get(
-    `https:/no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
-  )
-  .then(function (response) {
-    const { data } = response;
-    const { products } = data;
-
-    const labels = products.map(product => product.brands);
-
-    const barData1 = [],
-      barData2 = [];
-
-    products.forEach(product => {
-      const languages = product.languages_tags.length,
-        ingredients = product.ingredients.length;
-
-      barData1.push(languages);
-      barData2.push(ingredients);
-    });
-
-    const barOptions = {
-      ...defaultOptions,
-      data: {
-        ...defaultOptions.data,
-        labels,
-        datasets: [
-          {
-            label: 'Languages',
-            data: barData1,
-            backgroundColor: ['#df8420'],
-            hoverBackgroundColor: ['#df8420'],
-            borderColor: ['#df8420'],
-            borderWidth: 1,
-            barThickness: 12,
-            borderRadius: 6,
-          },
-          {
-            label: 'Ingredients',
-            data: barData2,
-            backgroundColor: ['#fff'],
-            hoverBackgroundColor: ['#fff'],
-            borderColor: ['#fff'],
-            borderWidth: 1,
-            barThickness: 12,
-            borderRadius: 6,
-          },
-        ],
-      },
-    };
-
-    const barFigureChart = createChart('figureBarChart', barOptions);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
 
 // Area Table Chart
 const data2022 = [
@@ -284,9 +331,9 @@ const selectYear = (element, year) => {
   areaChart.update();
 };
 
-// Get paged table
-
 // Radial Bar Card
+
+// Get paged table
 
 // Dark Mode Toggle
 const toggleDarkMode = element => {
@@ -315,6 +362,5 @@ const toggleDarkMode = element => {
   gradient.addColorStop(0.8, colorChartShade1);
 
   areaChart.data.datasets[0].backgroundColor = newGradient;
-
   areaChart.update();
 };

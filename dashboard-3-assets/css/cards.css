@@ -185,7 +185,7 @@
 }
 
 .card-radial-bar-rail {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 0;
   top: 0;
@@ -274,10 +274,23 @@
   color: var(--color-primary-text);
 }
 
+.card-radial-bar-chart .select-wrapper {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  background: var(--color-grey);
+  display: grid;
+  place-items: center;
+  height: 2rem;
+  border-radius: 1rem;
+  padding: 0 1rem;
+}
+
 .card-radial-bar-chart select {
   background: transparent;
   color: var(--color-label);
   border: 0;
+  outline: none;
+  width: 100%;
 }
 
 /* Paged Table Card */
