@@ -84,6 +84,11 @@ const defaultOptions = {
       },
       tooltip: {
         usePointStyle: true,
+        callback: {
+          labelPointStyle: () => ({
+            pointStyle: 'circle',
+          }),
+        },
         caretSize: 0,
         padding: 12,
         bodyFont: {
@@ -247,6 +252,19 @@ gradient.addColorStop(0.8, 'rgba(0,0,0,0)');
 
 areaChart.data.datasets[0].backgroundColor = gradient;
 areaChart.update();
+
+const selectYear = (element, year) => {
+  // Style the buttons over chart
+  const buttons = document.querySelectorAll('.card-header button');
+  buttons.forEach(button => {
+    button.classList.remove('active');
+  });
+  element.classList.add('active');
+
+  // Update data in the chart
+  areaChart.data.datasets[0].data = year === 2022 ? data2022 : data2021;
+  areaChart.update();
+};
 
 // Get paged table
 
