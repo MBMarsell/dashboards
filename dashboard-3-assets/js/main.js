@@ -1,4 +1,21 @@
 // Load Dark Mode Settings
+let isDarkMode = localStorage.getItem('js_dashboard_dark_mode')
+  ? localStorage.getItem('js_dashboard_dark_mode') === 'true'
+  : window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+document.querySelector('.dark-mode-toggle.uil').classList.remove('uil-sun');
+document.querySelector('.dark-mode-toggle.uil').classList.remove('uil-moon');
+
+if (isDarkMode) {
+  document.querySelector('.dark-mode-toggle.uil').classList.add('uil-sun');
+} else {
+  document.querySelector('.dark-mode-toggle.uil').classList.add('uil-moon');
+}
+
+document
+  .querySelector('html')
+  .setAttribute('data-dark-mode', isDarkMode.toString());
 
 // Get Colors From CSS Variables
 const getColorVariable = color =>
@@ -6,13 +23,15 @@ const getColorVariable = color =>
     .getPropertyValue(`--color-${color}`)
     .trim();
 
-const colorPrimary = getColorVariable('primary');
-const colorAccent = getColorVariable('accent');
-const colorDefault = getColorVariable('default');
-const colorCard = getColorVariable('card');
-const colorBorder = getColorVariable('border');
-const colorLabel = getColorVariable('label');
-const colorGrey = getColorVariable('grey');
+let colorPrimary = getColorVariable('primary'),
+  colorAccent = getColorVariable('accent'),
+  colorDefault = getColorVariable('default'),
+  colorCard = getColorVariable('card'),
+  colorBorder = getColorVariable('border'),
+  colorLabel = getColorVariable('label'),
+  colorGrey = getColorVariable('grey'),
+  colorChartShade0 = getColorVariable('chart-shade-0'),
+  colorChartShade1 = getColorVariable('chart-shade-1');
 
 // Create chart function
 const createChart = (selector, options) => {
@@ -186,7 +205,6 @@ const data2022 = [
 const data2021 = [
   500000, 120000, 400000, 900000, 600000, 2300000, 360000, 1800000, 500000,
 ];
-
 const areaTableOptions = {
   type: 'line',
   data: {
@@ -247,8 +265,8 @@ const [areaChartCtx, areaChart] = createChart(
 );
 
 const gradient = areaChartCtx.createLinearGradient(0, 0, 0, 220);
-gradient.addColorStop(0, 'rgba(0,0,0, 0.2)');
-gradient.addColorStop(0.8, 'rgba(0,0,0,0)');
+gradient.addColorStop(0, colorChartShade0);
+gradient.addColorStop(0.8, colorChartShade1);
 
 areaChart.data.datasets[0].backgroundColor = gradient;
 areaChart.update();
@@ -271,3 +289,32 @@ const selectYear = (element, year) => {
 // Radial Bar Card
 
 // Dark Mode Toggle
+const toggleDarkMode = element => {
+  if (!isDarkMode) {
+    element.classList.remove('uil-moon');
+    element.classList.add('uil-sun');
+    document.querySelector('html').setAttribute('data-dark-mode', 'true');
+    localStorage.setItem('js_dashboard_dark_mode', 'true');
+  } else {
+    element.classList.remove('uil-sun');
+    element.classList.add('uil-moon');
+
+    document.querySelector('html').setAttribute('data-dark-mode', 'false');
+    localStorage.setItem('js_dashboard_dark_mode', 'false');
+  }
+
+  isDarkMode = !isDarkMode;
+
+  areaChart.options.scales.y.grid.color = getColorVariable('border');
+
+  colorChartShade0 = getColorVariable('chart-shade-0');
+  colorChartShade1 = getColorVariable('chart-shade-1');
+
+  const newGradient = areaChartCtx.createLinearGradient(0, 0, 0, 220);
+  gradient.addColorStop(0, colorChartShade0);
+  gradient.addColorStop(0.8, colorChartShade1);
+
+  areaChart.data.datasets[0].backgroundColor = newGradient;
+
+  areaChart.update();
+};
