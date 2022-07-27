@@ -267,7 +267,7 @@ getNoProducts();
 
 const getTopProducts = async () => {
   const res = await axios.get(
-    `https:/world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
+    `https:/no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
   );
 
   const { data } = res;
