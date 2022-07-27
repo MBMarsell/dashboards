@@ -234,7 +234,7 @@ const dashboardCategory = 'Chocolate';
 const getWorldProducts = async () => {
   try {
     const res = await fetch(
-      `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
+      `https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=additives_n&page_size=6`
     );
     const data = await res.json();
 
@@ -252,7 +252,7 @@ getWorldProducts();
 const getNoProducts = async () => {
   try {
     const res = await fetch(
-      `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
+      `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=additives_n&page_size=6`
     );
     const data = await res.json();
 
@@ -268,7 +268,7 @@ getNoProducts();
 
 const getTopProducts = async () => {
   const res = await axios.get(
-    `https:/no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=6`
+    `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=additives_n&page_size=6`
   );
 
   const { data } = res;
@@ -426,7 +426,7 @@ const getPagedTable = async (newPage = page) => {
   document.querySelector('.paged-table-spinner').classList.add('loading');
 
   const res = await axios.get(
-    `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=brands&page_size=${pageSize}&page=${newPage}`
+    `https://no.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tag_contains_0=contains&tag_0=${category}&json=true&sort_by=additives_n&page_size=${pageSize}&page=${newPage}`
   );
 
   const { data } = res;
