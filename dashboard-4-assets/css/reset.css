@@ -1,0 +1,33 @@
+:root {
+  --color-primary: #df6420;
+  --color-primary-text: #f9f9f9;
+  /* --color-accent: #ae4880; */
+  --color-accent: #885ce6;
+  --color-default: #363636;
+  --color-grey: #efeef4;
+  --color-border: #efefef;
+  --color-background: #ebebeb;
+  --color-card: #ffffff;
+
+  --color-text: #363636;
+  --color-label: #a1a1a1;
+  --color-disabled: #cccccc;
+
+  --color-chart-shade-0: rgba(223, 99, 32, 0.2);
+  --color-chart-shade-1: rgba(223, 99, 32, 0);
+}
+
+[data-dark-mode='true'] {
+  --color-border: #2c2c2c;
+  --color-background: #242424;
+  --color-card: #1b1b1b;
+
+  --color-text: #f9f9f9;
+  --color-label: #aaaaaa;
+  --color-disabled: #888888;
+
+  --color-grey: #363636;
+
+  --color-chart-shade-0: rgba(255, 255, 255, 0.2);
+  --color-chart-shade-1: rgba(255, 255, 255, 0);
+}
