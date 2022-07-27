@@ -2,4 +2,7 @@
   --color-primary: #df6420;
   --color-accent: #34ecd7;
   --color-default: #363636;
+
+  --animate-duration: 1000ms;
+  --animate-delay: 0.25s;
 }

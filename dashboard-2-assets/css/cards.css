@@ -26,10 +26,10 @@
   padding: 2rem 0;
 }
 
-.card-line-chart-1 .card-h3,
+/* .card-line-chart-1 .card-h3,
 .card-line-chart-2 .card-h3 {
   margin-bottom: var(--length-lg1);
-}
+} */
 
 /* Leaflet map */
 .card-leaflet-map {
@@ -72,12 +72,6 @@
   width: 420px;
   /* margin-right: 4rem; */
 }
-
-/* @media only screen and (max-width: 800px) {
-  .card-leaflet-map-wrapper {
-    margin: 0;
-  }
-} */
 
 .card-leaflet-bar-row {
   display: flex;

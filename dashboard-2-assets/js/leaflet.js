@@ -23,7 +23,6 @@ const markers = [
 fetch('https://fakestoreapi.com/users?limit=4')
   .then(res => res.json())
   .then(json => {
-    console.log(json);
     json.forEach((user, index) => {
       let marker = L.marker(markers[index], {
         icon: L.divIcon({
