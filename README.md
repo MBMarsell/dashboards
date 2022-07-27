@@ -1,4 +1,4 @@
-# dashboards
+# Dashboards
 Dashboards made with a couple different charting libraries. Apexcharts, Chartist.js &amp; Chart.js
 
 ## Links
