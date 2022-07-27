@@ -1,29 +1,29 @@
 .container {
   grid-template-areas:
-    "headline1 headline2"
-    "bar-figure-chart bar-figure-chart"
-    "area-table-chart area-table-chart"
-    "radial-bar radial-bar"
-    "paged-table paged-table";
+    'headline1 headline2'
+    'bar-figure-chart bar-figure-chart'
+    'area-table-chart area-table-chart'
+    'radial-bar radial-bar'
+    'paged-table paged-table';
 }
 
 @media only screen and (min-width: 600px) {
   .container {
     grid-template-areas:
-      "headline1 headline2"
-      "bar-figure-chart bar-figure-chart"
-      "area-table-chart area-table-chart"
-      "radial-bar radial-bar"
-      "paged-table paged-table";
+      'headline1 headline2'
+      'bar-figure-chart bar-figure-chart'
+      'area-table-chart area-table-chart'
+      'radial-bar radial-bar'
+      'paged-table paged-table';
   }
 }
 
 @media only screen and (min-width: 800px) {
   .container {
     grid-template-areas:
-      "headline1 headline2 area-table-chart area-table-chart"
-      "bar-figure-chart bar-figure-chart area-table-chart area-table-chart"
-      "radial-bar radial-bar paged-table paged-table";
+      'headline1 headline2 area-table-chart area-table-chart'
+      'bar-figure-chart bar-figure-chart area-table-chart area-table-chart'
+      'radial-bar radial-bar paged-table paged-table';
   }
 }
 
@@ -42,7 +42,7 @@
   transition: all 0.5s;
 }
 
-.preloader.totals-loading,
+.preloader.radial-bar-loading,
 .preloader.drinks-loading {
   opacity: 1;
   visibility: visible;

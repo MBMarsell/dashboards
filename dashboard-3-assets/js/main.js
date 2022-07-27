@@ -190,6 +190,8 @@ const selectProduct = id => {
   radialBarChart.data.datasets[0].data = [product.additives_n, 5];
   radialBarChart.update();
 
+  document.querySelector('#preloader').classList.remove('radial-bar-loading');
+
   const facts = [
     `${product?.additives_n || 0} additive(s)`,
     `${product?.categories_tags.length} tag(s)`,
