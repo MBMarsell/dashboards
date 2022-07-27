@@ -492,15 +492,27 @@ const toggleDarkMode = element => {
 
   isDarkMode = !isDarkMode;
 
+  // update area chart
   areaChart.options.scales.y.grid.color = getColorVariable('border');
 
   colorChartShade0 = getColorVariable('chart-shade-0');
   colorChartShade1 = getColorVariable('chart-shade-1');
 
   const newGradient = areaChartCtx.createLinearGradient(0, 0, 0, 220);
-  gradient.addColorStop(0, colorChartShade0);
-  gradient.addColorStop(0.8, colorChartShade1);
+  newGradient.addColorStop(0, colorChartShade0);
+  newGradient.addColorStop(0.8, colorChartShade1);
 
   areaChart.data.datasets[0].backgroundColor = newGradient;
   areaChart.update();
+
+  // update radial bar chart
+  radialBarChart.data.datasets[0].backgroundColor = [
+    colorPrimary,
+    getColorVariable('grey'),
+  ];
+  radialBarChart.data.datasets[0].hoverBackgroundColor = [
+    colorPrimary,
+    getColorVariable('grey'),
+  ];
+  radialBarChart.update('none');
 };
