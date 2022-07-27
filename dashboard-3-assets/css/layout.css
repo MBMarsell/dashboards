@@ -43,7 +43,7 @@
 }
 
 .preloader.radial-bar-loading,
-.preloader.drinks-loading {
+.preloader.products-loading {
   opacity: 1;
   visibility: visible;
 }

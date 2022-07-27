@@ -123,9 +123,9 @@ const buildBarChart = () => {
         {
           label: 'Languages',
           data: barData1,
-          backgroundColor: ['#df8420'],
-          hoverBackgroundColor: ['#df8420'],
-          borderColor: ['#df8420'],
+          backgroundColor: [colorAccent],
+          hoverBackgroundColor: [colorAccent],
+          borderColor: [colorAccent],
           borderWidth: 1,
           barThickness: 12,
           borderRadius: 6,
@@ -229,7 +229,8 @@ const createRadialBarSelect = () => {
 };
 
 // Get Data From API
-const category = 'en:beverages'; // Change category
+const category = 'en:chocolate'; // Change category
+const dashboardCategory = 'Chocolate';
 const getWorldProducts = async () => {
   try {
     const res = await fetch(
@@ -241,7 +242,7 @@ const getWorldProducts = async () => {
 
     document.querySelector('#totalWorldProducts').innerHTML =
       abbreviateLongNumber(count);
-    document.querySelector('#preloader').classList.remove('drinks-loading');
+    document.querySelector('#preloader').classList.remove('products-loading');
   } catch (error) {
     console.log('Error', error);
   }
@@ -259,8 +260,6 @@ const getNoProducts = async () => {
 
     document.querySelector('#totalNoProducts').innerHTML =
       abbreviateLongNumber(count);
-
-    // document.querySelector('#preloader').classList.remove('drinks-loading');
   } catch (error) {
     console.log('Error', error);
   }
