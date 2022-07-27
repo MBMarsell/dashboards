@@ -242,8 +242,6 @@ const getWorldProducts = async () => {
     document.querySelector('#totalWorldProducts').innerHTML =
       abbreviateLongNumber(count);
     document.querySelector('#preloader').classList.remove('drinks-loading');
-
-    console.log('count ', count);
   } catch (error) {
     console.log('Error', error);
   }
@@ -263,8 +261,6 @@ const getNoProducts = async () => {
       abbreviateLongNumber(count);
 
     // document.querySelector('#preloader').classList.remove('drinks-loading');
-
-    console.log('count ', count);
   } catch (error) {
     console.log('Error', error);
   }
